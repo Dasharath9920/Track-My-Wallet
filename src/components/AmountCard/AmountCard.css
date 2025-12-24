@@ -1,0 +1,10 @@
+.amount-card {
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: white;
+  width: 100%;
+}
+
+.amount-card p {
+  margin: 10px 0px;
+}

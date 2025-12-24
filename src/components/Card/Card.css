@@ -1,0 +1,14 @@
+.card {
+  width: 100%;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 1px 1px 12px lightgrey;
+}
+
+.heading {
+  font-size: 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid lightgrey;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}

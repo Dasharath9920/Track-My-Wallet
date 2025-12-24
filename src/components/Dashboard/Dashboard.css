@@ -1,0 +1,126 @@
+.dashboard {
+  padding: 20px;
+  position: relative;
+}
+
+.card-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.transaction-summary-container>*:nth-child(1) {
+  flex: 1;
+}
+
+.transaction-summary-container>*:nth-child(2) {
+  flex: 2;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dashboard-header-text {
+  width: 400px;
+}
+
+.btn-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-entry-btn {
+  background-color: transparent;
+  border: 1px solid #889ce5;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: .3s ease all;
+  cursor: pointer;
+}
+
+.add-entry-btn:hover {
+  background-color: #adbbf0;
+}
+
+.modal-container {
+  position: fixed;
+  inset: 0;
+  /* top:0 right:0 bottom:0 left:0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Dark + blur background */
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  /* main blur */
+  -webkit-backdrop-filter: blur(8px);
+  /* Safari support */
+  z-index: 1000;
+}
+
+.content-container {
+  height: 200px;
+  overflow-y: auto;
+  /* or scroll */
+  /* Firefox */
+  scrollbar-width: none;
+  /* IE / old Edge */
+  -ms-overflow-style: none;
+}
+
+/* Chrome, Safari, Edge (Chromium) */
+.content-container::-webkit-scrollbar {
+  display: none;
+}
+
+.payments {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.payment {
+  padding: 5px 10px;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.payment-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.payment-pill {
+  width: 100px;
+  margin: 0;
+  font-size: 1rem;
+  padding: 2px;
+  border-radius: 99px;
+  background-color: #61d5a2;
+  text-align: center;
+}
+
+.payment-subtext {
+  font-size: .7rem;
+  font-style: italic;
+  margin: 0;
+}
+
+.payment-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}

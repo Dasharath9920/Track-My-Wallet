@@ -1,0 +1,19 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.flex-sp-btw {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn {
+  background-color: transparent;
+  border: 1px solid lightgrey;
+  padding: 8px 12px;
+  border-radius: 4px;
+}

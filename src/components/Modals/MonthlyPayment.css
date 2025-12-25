@@ -17,24 +17,6 @@
   text-align: center;
 }
 
-.input-field {
-  margin-bottom: 16px;
-  display: flex;
-  text-align: left;
-  flex-direction: column;
-}
-
-.input-field label {
-  font-size: .9rem;
-  margin-bottom: 5px;
-}
-
-.input-field input {
-  border-radius: 3px;
-  border: 1px solid lightgrey;
-  padding: 8px 8px;
-}
-
 .modal-btn-group {
   width: 100%;
   display: flex;

@@ -36,7 +36,8 @@ const Transaction = ({ onClose }: TransactionProps) => {
           name='category'
           value={category}
           onChange={e => setCategory(e.target.value)}
-          required>
+          required
+          style={{ padding: '8px', border: '1px solid lightgrey' }}>
           <option value="" disabled>Select a Category</option>
           {
             Object.keys(AMOUNT_CATEGORIES).map((category: string) => (

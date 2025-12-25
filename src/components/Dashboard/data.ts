@@ -40,3 +40,33 @@ export const AMOUNT_CATEGORIES: { [key: string]: string } = {
   DEBT: "Debt",
   OTHER: "Other",
 };
+
+export const pieData = [
+  { category: "Rent", value: 8000 },
+  { category: "Groceries", value: 2500 },
+  { category: "Food", value: 1200 },
+  { category: "Entertainment", value: 1800 },
+  { category: "Savings", value: 5000 },
+  { category: "Shopping", value: 900 },
+  { category: "Family", value: 2890 },
+  { category: "Insurance", value: 0 },
+  { category: "Health", value: 0 },
+  { category: "Debt", value: 0 },
+  { category: "Transportation", value: 0 },
+  { category: "Other", value: 900 },
+];
+
+export const CATEGORY_COLORS: Record<string, string> = {
+  Groceries: "#4CAF50",          // deep organic green · fresh essentials
+  Food: "#FF5722",               // rich burnt orange · restaurant vibrance
+  Entertainment: "#C026D3",      // neon–purple nightlife · fun
+  Shopping: "#E11D48",           // luxury ruby pink · bold spending
+  Rent: "#D97706",               // deep amber · recurring + priority
+  Transportation: "#0284C7",     // deep sky blue · movement
+  Family: "#1D4ED8",             // trust blue · warmth + security
+  Insurance: "#6D28D9",          // royal violet · protection & premium
+  Health: "#B91C1C",             // strong medical danger red
+  Savings: "#059669",            // dark emerald · growth + security
+  Debt: "#DC2626",               // danger red · financial alert
+  Other: "#6B7280",              // elegant muted slate gray
+};

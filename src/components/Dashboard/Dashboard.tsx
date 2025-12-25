@@ -81,9 +81,9 @@ const Dashboard = () => {
           </ul>
         </Card>
         <Card heading="Expense Breakdown">
-          <p className='content-container'>
+          <div className='content-container'>
             <CategorySpendPie />
-          </p>
+          </div>
         </Card>
       </div>
 

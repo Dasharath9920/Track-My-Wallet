@@ -1,34 +1,39 @@
-import React from 'react'
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { CATEGORY_COLORS, pieData } from '../Dashboard/data';
 
 const CategorySpendPie = () => {
-  const data = [
-    { category: "Food", value: 1200 },
-    { category: "Rent", value: 8000 },
-    { category: "Shopping", value: 2500 },
-    { category: "Travel", value: 1800 },
-    { category: "Others", value: 600 }
-  ];
+  const data = [...pieData].sort((a, b) => b.value - a.value).map(data => {
+    return {
+      ...data,
+      name: `${data.category}: ₹${data.value}`,
+    }
+  });
 
-  const COLORS = ["#6366F1", "#F43F5E", "#22C55E", "#EAB308", "#38BDF8"];
+  console.log(data);
+
+  const renderLabel = ({ percent }: { percent?: number }) =>
+    `${((percent ?? 0) * 100).toFixed(0)}%`;
+
   return (
-    <div style={{ width: "100%", height: 320 }}>
+    <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
         <PieChart>
           <Pie
             data={data}
             dataKey="value"
-            nameKey="category"
+            nameKey="name"
             cx="50%"
             cy="50%"
             outerRadius={120}
-            innerRadius={60}   // makes it donut
-            paddingAngle={3}
+            innerRadius={0}   // makes it donut
+            paddingAngle={0}
             stroke="#111827"
-            strokeWidth={2}
+            strokeWidth={.5}
+            label={renderLabel}
+            labelLine={false}
           >
-            {data.map((_, index) => (
-              <Cell key={index} fill={COLORS[index % COLORS.length]} />
+            {data.map((d, index) => (
+              <Cell key={index} fill={CATEGORY_COLORS[d.category]} />
             ))}
           </Pie>
 
@@ -41,7 +46,14 @@ const CategorySpendPie = () => {
             }}
           />
 
-          <Legend />
+          <Legend
+            layout='vertical'
+            align='left'
+            verticalAlign='middle'
+            wrapperStyle={{ paddingLeft: '10px' }}
+            itemSorter={(item) =>
+              -((item?.payload as any)?.value ?? 0)
+            } />
         </PieChart>
       </ResponsiveContainer>
     </div>

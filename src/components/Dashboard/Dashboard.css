@@ -11,12 +11,8 @@
   margin-bottom: 20px;
 }
 
-.transaction-summary-container>*:nth-child(1) {
-  flex: 1;
-}
-
-.transaction-summary-container>*:nth-child(2) {
-  flex: 2;
+.transaction-summary-container .content-container {
+  height: 300px;
 }
 
 .header {

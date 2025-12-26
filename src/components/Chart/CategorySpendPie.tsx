@@ -1,15 +1,28 @@
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
-import { CATEGORY_COLORS, pieData } from '../Dashboard/data';
+import { CATEGORY_COLORS } from '../Dashboard/data';
+import { getLastNDaysDataGroupByCategory } from '../../utils';
+import { useEffect, useState } from 'react';
+import { USERID } from '../../constants';
 
 const CategorySpendPie = () => {
-  const data = [...pieData].sort((a, b) => b.value - a.value).map(data => {
-    return {
-      ...data,
-      name: `${data.category}: ₹${data.value}`,
-    }
-  });
+  const [chartData, setChartData] = useState<any[]>([]);
 
-  console.log(data);
+  useEffect(() => {
+    async function fetchData() {
+      const userId = localStorage.getItem(USERID);
+      if (userId) {
+        const res = await getLastNDaysDataGroupByCategory(userId, 5);
+        const data = Object.keys(res).map(key => ({
+          category: key,
+          value: res[key],
+          name: `${key}: ₹${res[key]}`
+        }));
+        setChartData(data);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const renderLabel = ({ percent }: { percent?: number }) =>
     `${((percent ?? 0) * 100).toFixed(0)}%`;
@@ -19,7 +32,7 @@ const CategorySpendPie = () => {
       <ResponsiveContainer>
         <PieChart>
           <Pie
-            data={data}
+            data={chartData}
             dataKey="value"
             nameKey="name"
             cx="50%"
@@ -32,7 +45,7 @@ const CategorySpendPie = () => {
             label={renderLabel}
             labelLine={false}
           >
-            {data.map((d, index) => (
+            {chartData.map((d, index) => (
               <Cell key={index} fill={CATEGORY_COLORS[d.category]} />
             ))}
           </Pie>

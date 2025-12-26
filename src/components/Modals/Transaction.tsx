@@ -1,34 +1,44 @@
 import React, { useState } from 'react';
 import './MonthlyPayment.css';
-import { useDispatch } from 'react-redux';
-import { StoreActions } from '../../datatypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreActions, type InitialState } from '../../datatypes';
 import { AMOUNT_CATEGORIES } from '../Dashboard/data';
+import { addTransaction } from '../../core/transaction-web';
 
 const Transaction = ({ onClose }: TransactionProps) => {
+  const today = new Date().toISOString().split('T')[0];
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const [customCategory, setCustomCategory] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(today);
+  const user = useSelector((state: InitialState) => state.user);
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch({
-      type: StoreActions.ADD_TRANSACTION,
-      data: {
-        category: category,
-        amount: Number(amount),
-        customCategory,
-        date,
-      }
-    });
+    const payload = {
+      user_id: user!.user_id,
+      amount: Number(amount),
+      category,
+      customCategory,
+      date_of_transaction: date,
+    };
+
+    const res = await addTransaction(payload);
+    if (res.ok) {
+      const transactions = await res.json();
+      dispatch({
+        type: StoreActions.UPDATE_TRANSACTIONS,
+        data: transactions.data
+      });
+    }
     onClose();
   }
 
   return (
     <form className='monthly-payment-container' onSubmit={handleSubmit}>
-      <h3 className='modal-header'>Add New Monthly Payment</h3>
+      <h3 className='modal-header'>Add Transaction</h3>
       <div className="input-field">
         <label htmlFor="category">Category</label>
         <select

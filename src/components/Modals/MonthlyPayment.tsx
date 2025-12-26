@@ -14,7 +14,7 @@ const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
 
   const handleSubmit = () => {
     dispatch({
-      type: StoreActions.ADD_PAYMENT,
+      type: StoreActions.UPDATE_PAYMENTS,
       data: {
         name: name,
         amount: Number(amount),

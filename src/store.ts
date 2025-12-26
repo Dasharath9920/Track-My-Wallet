@@ -12,13 +12,11 @@ const reducer = (state = initialState, action: { data: any, type: StoreActions }
     case StoreActions.UPDATE_USER: {
       return { ...state, user: action.data };
     }
-    case StoreActions.ADD_PAYMENT: {
-      const newPayments = [...state.payments, action.data];
-      return { ...state, payments: newPayments };
+    case StoreActions.UPDATE_PAYMENTS: {
+      return { ...state, payments: action.data };
     }
-    case StoreActions.ADD_TRANSACTION: {
-      const newTransactions = [...state.transactions, action.data];
-      return { ...state, transactions: newTransactions };
+    case StoreActions.UPDATE_TRANSACTIONS: {
+      return { ...state, transactions: action.data };
     }
     default: return state;
   }

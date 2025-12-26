@@ -26,7 +26,7 @@ export const data = [
 ]
 
 export const AMOUNT_CATEGORIES: { [key: string]: string } = {
-  SALARY: "Salary Received",
+  SALARY: "Salary",
   GROCERIES: "Groceries",
   FOOD: "Food",
   ENTERTAINMENT: "Entertainment",

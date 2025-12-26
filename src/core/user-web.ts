@@ -1,6 +1,6 @@
-import type { UserRequest } from "../datatypes";
+import type { User } from "../datatypes";
 
-export const registerUser = async (user: UserRequest) => {
+export const registerUser = async (user: User) => {
   const res = await fetch('http://localhost:3000/users', {
     method: 'POST',
     headers: {

@@ -10,6 +10,7 @@ import { getNextDueDate } from '../../utils';
 import Transaction from '../Modals/Transaction';
 import OverviewChart from '../Chart/OverviewChart';
 import CategorySpendPie from '../Chart/CategorySpendPie';
+import Transactions from '../Transactions/Transactions';
 
 const Dashboard = () => {
 
@@ -17,7 +18,6 @@ const Dashboard = () => {
   const [modalType, setModalType] = useState<modalTypes>(modalTypes.Transaction);
 
   const payments = useSelector((state: InitialState) => state.payments);
-  const transactions = useSelector((state: InitialState) => state.transactions);
 
   const handleToggleModal = (modalType: modalTypes) => {
     const openModal = !open;
@@ -66,20 +66,7 @@ const Dashboard = () => {
       </div>
 
       <div className="card-container transaction-summary-container">
-        <Card heading="Recent Transactions">
-          <ul className='content-container payments'>
-            {transactions.map(transaction => {
-              return <li key={transaction.category} className='payment'>
-                <div className='payment-field'>
-                  <h4 className='payment-name'>{transaction.category}</h4>
-                  <p className='payment-subtext'>{transaction.date}</p>
-                </div>
-                <h3 className='payment-pill'>₹{transaction.amount}</h3>
-              </li>
-            })
-            }
-          </ul>
-        </Card>
+        <Transactions />
         <Card heading="Expense Breakdown">
           <div className='content-container'>
             <CategorySpendPie />

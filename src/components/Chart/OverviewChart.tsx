@@ -1,5 +1,6 @@
 import Chart from "react-apexcharts";
 import { type ApexOptions } from "apexcharts";
+import Card from "../Card/Card";
 
 const OverviewChart = () => {
 
@@ -97,9 +98,14 @@ const OverviewChart = () => {
   ];
 
   return (
-    <div style={{ width: "100%", height: 200 }}>
-      <Chart options={options} series={series} type="area" height="100%" />
-    </div>
+    <Card heading="Spending Overview" loading={false}>
+      <div className='content-container'>
+        <div style={{ width: "100%", height: 200 }}>
+          <Chart options={options} series={series} type="area" height="100%" />
+        </div>
+      </div>
+    </Card>
+
   );
 }
 

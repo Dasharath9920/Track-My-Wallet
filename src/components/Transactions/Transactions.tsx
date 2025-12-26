@@ -1,11 +1,12 @@
 import Card from '../Card/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreActions, type InitialState } from '../../datatypes';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllTransactions } from '../../core/transaction-web';
 import { USERID } from '../../constants';
 
 const Transactions = () => {
+  const [loading, setLoading] = useState(true);
   const transactions = useSelector((state: InitialState) => state.transactions);
   const dispatch = useDispatch();
 
@@ -23,13 +24,14 @@ const Transactions = () => {
           console.error('failed to fetch transactions: ', err);
         }
       }
+      setLoading(false);
     }
     fetchTransactions();
   }, []);
 
   return (
     <>
-      <Card heading="Recent Transactions">
+      <Card heading="Recent Transactions" loading={loading}>
         <ul className='content-container payments'>
           {transactions.map(transaction => {
             return <li key={transaction.id} className='payment'>

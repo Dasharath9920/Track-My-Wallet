@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import AmountCard from '../AmountCard/AmountCard';
-import Card from '../Card/Card';
 import './Dashboard.css'
 import { data } from './data';
 import { modalTypes } from '../../datatypes';
@@ -39,21 +38,13 @@ const Dashboard = () => {
       </div>
 
       <div className='card-container'>
-        <Card heading="Spending Overview">
-          <div className='content-container'>
-            <OverviewChart />
-          </div>
-        </Card>
+        <OverviewChart />
         <Payments />
       </div>
 
       <div className="card-container transaction-summary-container">
         <Transactions />
-        <Card heading="Expense Breakdown">
-          <div className='content-container'>
-            <CategorySpendPie />
-          </div>
-        </Card>
+        <CategorySpendPie />
       </div>
 
       {open && modalType === modalTypes.MonthlyPayment && <div className='modal-container'>

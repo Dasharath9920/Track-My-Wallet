@@ -1,28 +1,39 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './MonthlyPayment.css';
-import { useDispatch } from 'react-redux';
-import { StoreActions } from '../../datatypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreActions, type InitialState } from '../../datatypes';
+import { addPayment } from '../../core/payment-web';
 
 const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
+  const today = new Date().toISOString().split('T')[0];
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [months, setMonths] = useState('');
   const [remaining, setRemaining] = useState('');
-  const [dueDay, setDueDay] = useState('');
+  const [dueDay, setDueDay] = useState(today);
+  const user = useSelector((state: InitialState) => state.user);
 
   const dispatch = useDispatch();
 
-  const handleSubmit = () => {
-    dispatch({
-      type: StoreActions.UPDATE_PAYMENTS,
-      data: {
-        name: name,
-        amount: Number(amount),
-        totalMonths: Number(months),
-        monthsRemaining: Number(remaining),
-        dueDate: Number(dueDay),
-      }
-    });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const payload = {
+      user_id: user!.user_id,
+      amount: Number(amount),
+      name,
+      totalMonths: Number(months),
+      monthsRemaining: Number(remaining),
+      dueDate: dueDay,
+    };
+
+    const res = await addPayment(payload);
+    if (res.ok) {
+      const payments = await res.json();
+      dispatch({
+        type: StoreActions.UPDATE_PAYMENTS,
+        data: payments.data
+      });
+    }
     onClose();
   }
 
@@ -85,13 +96,10 @@ const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
         <input
           id="dueDay"
           name="dueDay"
-          type="number"
+          type="date"
           value={dueDay}
           onChange={(e) => setDueDay(e.target.value)}
-          min={1}
-          max={31}
           required
-          placeholder="e.g., 10"
         />
       </div>
 

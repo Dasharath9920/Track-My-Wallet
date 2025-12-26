@@ -2,7 +2,8 @@ import { initialTotals } from "./constants";
 import { getAllTransactions } from "./core/transaction-web";
 import type { AmountByCategory } from "./datatypes";
 
-export const getNextDueDate = (day: number) => {
+export const getNextDueDate = (dueDay: string) => {
+  const day = Number(dueDay.split('T')[0].split('-')[2] ?? 0);
   const date = new Date();
   const today = date.getDate();
 

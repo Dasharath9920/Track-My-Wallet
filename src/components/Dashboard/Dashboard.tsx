@@ -3,21 +3,18 @@ import AmountCard from '../AmountCard/AmountCard';
 import Card from '../Card/Card';
 import './Dashboard.css'
 import { data } from './data';
-import { modalTypes, type InitialState } from '../../datatypes';
+import { modalTypes } from '../../datatypes';
 import MonthlyPayment from '../Modals/MonthlyPayment';
-import { useSelector } from 'react-redux';
-import { getNextDueDate } from '../../utils';
 import Transaction from '../Modals/Transaction';
 import OverviewChart from '../Chart/OverviewChart';
 import CategorySpendPie from '../Chart/CategorySpendPie';
 import Transactions from '../Transactions/Transactions';
+import Payments from '../Payments/Payments';
 
 const Dashboard = () => {
 
   const [open, setOpen] = useState(false);
   const [modalType, setModalType] = useState<modalTypes>(modalTypes.Transaction);
-
-  const payments = useSelector((state: InitialState) => state.payments);
 
   const handleToggleModal = (modalType: modalTypes) => {
     const openModal = !open;
@@ -47,22 +44,7 @@ const Dashboard = () => {
             <OverviewChart />
           </div>
         </Card>
-        <Card heading="Upcoming Payments">
-          <ul className='content-container payments'>
-            {payments.map(payment => {
-              return <li key={payment.name} className='payment'>
-                <div className='payment-field'>
-                  <h4 className='payment-name'>{payment.name}</h4>
-                  <p className='payment-subtext'>Due: {getNextDueDate(payment.dueDate)}</p>
-                </div>
-                <div className='payment-field'>
-                  <h3 className='payment-pill'>₹{payment.amount}</h3>
-                  <p className='payment-subtext'>Paid {payment.monthsRemaining}/{payment.totalMonths} months</p>
-                </div>
-              </li>
-            })}
-          </ul>
-        </Card>
+        <Payments />
       </div>
 
       <div className="card-container transaction-summary-container">

@@ -17,11 +17,12 @@ export interface UserResponse {
 };
 
 export interface Payment {
+  user_id: string;
   name: string;
   totalMonths: number;
   monthsRemaining: number;
   amount: number;
-  dueDate: number;
+  dueDate: string;
 }
 
 export interface Transaction {
@@ -43,9 +44,21 @@ export interface TransactionResponse {
   updated_at: Date;
 }
 
+export interface PaymentResponse {
+  id: string;
+  user_id: string;
+  name: string;
+  total_months: number;
+  months_remaining: number;
+  amount: number;
+  due_date: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface InitialState {
   user: UserResponse | null,
-  payments: Payment[],
+  payments: PaymentResponse[],
   transactions: TransactionResponse[],
 }
 

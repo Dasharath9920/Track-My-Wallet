@@ -41,21 +41,6 @@ export const AMOUNT_CATEGORIES: { [key: string]: string } = {
   OTHER: "Other",
 };
 
-export const pieData = [
-  { category: "Rent", value: 8000 },
-  { category: "Groceries", value: 2500 },
-  { category: "Food", value: 1200 },
-  { category: "Entertainment", value: 1800 },
-  { category: "Savings", value: 5000 },
-  { category: "Shopping", value: 900 },
-  { category: "Family", value: 2890 },
-  { category: "Insurance", value: 0 },
-  { category: "Health", value: 0 },
-  { category: "Debt", value: 0 },
-  { category: "Transportation", value: 0 },
-  { category: "Other", value: 900 },
-];
-
 export const CATEGORY_COLORS: Record<string, string> = {
   Groceries: "#4CAF50",          // deep organic green · fresh essentials
   Food: "#FF5722",               // rich burnt orange · restaurant vibrance

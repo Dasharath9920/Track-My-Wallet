@@ -27,3 +27,17 @@ export async function getAllTransactions(userId: string, days?: number): Promise
   const body = await res.json();
   return body.data;
 }
+
+export async function getAllTransactionsGroupByDay(userId: string, days?: number): Promise<{ day: string, amount: number }[]> {
+  let url = `http://localhost:3000/transactions/${userId}/group-by-day?days=${days}`
+  const res = await fetch(url, {
+    method: 'GET',
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch transactions');
+  }
+
+  const body = await res.json();
+  return body.data;
+}

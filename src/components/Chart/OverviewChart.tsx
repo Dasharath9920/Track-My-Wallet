@@ -1,43 +1,27 @@
 import Chart from "react-apexcharts";
 import { type ApexOptions } from "apexcharts";
 import Card from "../Card/Card";
+import { useEffect, useState } from "react";
+import { USERID } from "../../constants";
+import { getAllTransactionsGroupByDay } from "../../core/transaction-web";
 
 const OverviewChart = () => {
 
-  const data = [
-    { day: "1", amount: 120 },
-    { day: "2", amount: 90 },
-    { day: "3", amount: 240 },
-    { day: "4", amount: 140 },
-    { day: "5", amount: 300 },
-    { day: "6", amount: 180 },
-    { day: "7", amount: 210 },
-    { day: "8", amount: 175 },
-    { day: "9", amount: 95 },
-    { day: "10", amount: 220 },
-    { day: "11", amount: 150 },
-    { day: "12", amount: 260 },
-    { day: "13", amount: 130 },
-    { day: "14", amount: 280 },
-    { day: "15", amount: 190 },
-    { day: "16", amount: 230 },
-    { day: "17", amount: 110 },
-    { day: "18", amount: 245 },
-    { day: "19", amount: 160 },
-    { day: "20", amount: 300 },
-    { day: "21", amount: 200 },
-    { day: "22", amount: 140 },
-    { day: "23", amount: 275 },
-    { day: "24", amount: 155 },
-    { day: "25", amount: 310 },
-    { day: "26", amount: 180 },
-    { day: "27", amount: 260 },
-    { day: "28", amount: 170 },
-    { day: "29", amount: 290 },
-    { day: "30", amount: 200 },
-    { day: "31", amount: 320 }
-  ];
+  const [data, setChartData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    async function fetchData() {
+      const userId = localStorage.getItem(USERID);
+      if (userId) {
+        const res = await getAllTransactionsGroupByDay(userId, 30);
+        setChartData(res);
+      }
+      setLoading(false);
+    }
+
+    fetchData();
+  }, []);
 
   const options: ApexOptions = {
     chart: {
@@ -98,7 +82,7 @@ const OverviewChart = () => {
   ];
 
   return (
-    <Card heading="Spending Overview" loading={false}>
+    <Card heading="Spending Overview" loading={loading}>
       <div className='content-container'>
         <div style={{ width: "100%", height: 200 }}>
           <Chart options={options} series={series} type="area" height="100%" />

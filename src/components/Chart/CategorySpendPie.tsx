@@ -13,7 +13,7 @@ const CategorySpendPie = () => {
     async function fetchData() {
       const userId = localStorage.getItem(USERID);
       if (userId) {
-        const res = await getLastNDaysDataGroupByCategory(userId, 5);
+        const res = await getLastNDaysDataGroupByCategory(userId, 30);
         const data = Object.keys(res).map(key => ({
           category: key,
           value: res[key],

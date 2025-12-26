@@ -22,11 +22,7 @@
   margin-bottom: 20px;
 }
 
-.dashboard-header-text {
-  width: 400px;
-}
-
-.btn-group {
+.dashboard-btn-group {
   display: flex;
   align-items: center;
   gap: 10px;

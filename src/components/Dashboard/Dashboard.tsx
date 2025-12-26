@@ -29,7 +29,7 @@ const Dashboard = () => {
     <div className='dashboard'>
       <div className='header'>
         <h3 className='dashboard-header-text'>Welcome Back, Dasharath!</h3>
-        <div className="btn-group">
+        <div className="dashboard-btn-group">
           <button className='add-entry-btn' onClick={() => handleToggleModal(modalTypes.Transaction)}>+ Add New Transaction</button>
           <button className='add-entry-btn' onClick={() => handleToggleModal(modalTypes.MonthlyPayment)}>+ Add Monthly Payment</button>
         </div>

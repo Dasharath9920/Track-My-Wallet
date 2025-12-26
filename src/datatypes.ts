@@ -1,8 +1,17 @@
-export interface User {
+export interface UserRequest {
   firstName: string;
   lastName: string;
-  imgUrl: string;
   email: string;
+  password: string;
+};
+
+export interface UserResponse {
+  user_id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  created_at: Date;
+  updated_at: Date;
 };
 
 export interface Payment {
@@ -21,7 +30,7 @@ export interface Transaction {
 }
 
 export interface InitialState {
-  user: User | null,
+  user: UserResponse | null,
   payments: Payment[],
   transactions: Transaction[],
 }

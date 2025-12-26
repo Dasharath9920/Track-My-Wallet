@@ -3,9 +3,8 @@ import './Login.css';
 
 const Login = ({ onTabChange }: { onTabChange: (tab: 'login' | 'register') => void }) => {
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
   }
 
   return (

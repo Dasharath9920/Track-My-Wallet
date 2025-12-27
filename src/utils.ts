@@ -1,7 +1,6 @@
 import { initialTotals } from "./constants";
 import { getAllTransactions } from "./core/transaction-web";
-import type { AmountByCategory } from "./datatypes";
-import { getDashboardStatistics } from "./core/statistics-web";
+import type { AmountByCategory, PaymentResponse, Statistics } from "./datatypes";
 
 export const getNextDueDate = (dueDay: string) => {
   const day = Number(dueDay.split('T')[0].split('-')[2] ?? 0);
@@ -30,8 +29,7 @@ export const getLastNDaysDataGroupByCategory = async (userId: string, days: numb
   return data;
 }
 
-export const dashboardStatistics = async (userId: string) => {
-  const statistics = await getDashboardStatistics(userId);
+export const dashboardStatistics = (statistics: Statistics, upcomingPayments: PaymentResponse[]) => {
   const data = {
     ['Total Balance']: {
       title: '₹8420',
@@ -49,8 +47,34 @@ export const dashboardStatistics = async (userId: string) => {
       backgroundColor: '#c88d2b',
     },
     ['Upcoming Bills']: {
-      title: '3 Bills Due',
-      subTitle: '₹14700',
+      title: `${upcomingPayments.length} Bills Due`,
+      subTitle: upcomingPayments.reduce((acc, payment) => acc + Number(payment.amount), 0),
+      backgroundColor: '#97385b',
+    },
+  }
+  return data;
+}
+
+export const getEmptyStats = (): Statistics => {
+  const data = {
+    ['Total Balance']: {
+      title: '₹8420',
+      subTitle: '+₹1230 This Month',
+      backgroundColor: '#3f6e86',
+    },
+    ['Monthly Spending']: {
+      title: `₹0`,
+      subTitle: `₹0 This Month`,
+      backgroundColor: '#515f90',
+    },
+    ['Top Category']: {
+      title: 'Entertainment',
+      subTitle: `₹0 This Month`,
+      backgroundColor: '#c88d2b',
+    },
+    ['Upcoming Bills']: {
+      title: `0 Bills Due`,
+      subTitle: '0',
       backgroundColor: '#97385b',
     },
   }

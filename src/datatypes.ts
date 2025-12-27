@@ -71,6 +71,7 @@ export interface InitialState {
   statistics: Statistics,
   overviewChart: TransactionGroupByDay[],
   pieChart: PieChartData[],
+  upcomingPayments: PaymentResponse[],
 }
 
 export const StoreActions = {
@@ -80,6 +81,7 @@ export const StoreActions = {
   UPDATE_STATISTICS: 'update_statistics',
   UPDATE_OVERVIEW_CHART: 'update_overview_chart',
   UPDATE_PIE_CHART: 'update_pie_chart',
+  UPDATE_UPCOMING_PAYMENTS: 'update_upcoming_payments',
 } as const;
 
 export type StoreActions = typeof StoreActions[keyof typeof StoreActions];

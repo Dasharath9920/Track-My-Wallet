@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { StoreActions, type InitialState } from "./datatypes"
+import { getEmptyStats } from "./utils";
 
 const initialState: InitialState = {
   user: null,
   payments: [] = [],
   transactions: [],
-  statistics: {},
+  statistics: getEmptyStats(),
   overviewChart: [],
   pieChart: [],
+  upcomingPayments: [],
 };
 
 const reducer = (state = initialState, action: { data: any, type: StoreActions }) => {
@@ -29,6 +31,9 @@ const reducer = (state = initialState, action: { data: any, type: StoreActions }
     }
     case StoreActions.UPDATE_PIE_CHART: {
       return { ...state, pieChart: action.data };
+    }
+    case StoreActions.UPDATE_UPCOMING_PAYMENTS: {
+      return { ...state, upcomingPayments: action.data };
     }
     default: return state;
   }

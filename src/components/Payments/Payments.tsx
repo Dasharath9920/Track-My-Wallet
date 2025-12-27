@@ -4,11 +4,11 @@ import { StoreActions, type InitialState } from '../../datatypes';
 import { getNextDueDate } from '../../utils';
 import { useEffect, useState } from 'react';
 import { USERID } from '../../constants';
-import { getAllPayments } from '../../core/payment-web';
+import { getUpcomingPayments } from '../../core/payment-web';
 
 const Payments = () => {
   const [loading, setLoading] = useState(true);
-  const payments = useSelector((state: InitialState) => state.payments);
+  const payments = useSelector((state: InitialState) => state.upcomingPayments);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,9 +16,9 @@ const Payments = () => {
     async function fetchPayments() {
       if (userId) {
         try {
-          const data = await getAllPayments(userId);
+          let data = await getUpcomingPayments(userId);
           dispatch({
-            type: StoreActions.UPDATE_PAYMENTS,
+            type: StoreActions.UPDATE_UPCOMING_PAYMENTS,
             data
           });
         } catch (err) {
@@ -41,7 +41,7 @@ const Payments = () => {
               </div>
               <div className='payment-field'>
                 <h3 className='payment-pill'>₹{payment.amount}</h3>
-                <p className='payment-subtext'>Paid {payment.months_remaining}/{payment.total_months} months</p>
+                <p className='payment-subtext'>Paid {payment.total_months - payment.months_remaining}/{payment.total_months} months</p>
               </div>
             </li>
           })}

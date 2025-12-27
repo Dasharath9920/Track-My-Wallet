@@ -4,9 +4,13 @@ import { getLastNDaysDataGroupByCategory } from '../../utils';
 import { useEffect, useState } from 'react';
 import { USERID } from '../../constants';
 import Card from '../Card/Card';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreActions, type InitialState } from '../../datatypes';
 
 const CategorySpendPie = () => {
-  const [chartData, setChartData] = useState<any[]>([]);
+  const chartData = useSelector((state: InitialState) => state.pieChart);
+  const transactions = useSelector((state: InitialState) => state.transactions);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,13 +23,16 @@ const CategorySpendPie = () => {
           value: res[key],
           name: `${key}: ₹${res[key]}`
         }));
-        setChartData(data);
+        dispatch({
+          type: StoreActions.UPDATE_PIE_CHART,
+          data
+        })
       }
       setLoading(false);
     }
 
     fetchData();
-  }, []);
+  }, [transactions]);
 
   const renderLabel = ({ percent }: { percent?: number }) =>
     `${((percent ?? 0) * 100).toFixed(0)}%`;
@@ -51,7 +58,7 @@ const CategorySpendPie = () => {
                 labelLine={false}
               >
                 {chartData.map((d, index) => (
-                  <Cell key={index} fill={CATEGORY_COLORS[d.category]} />
+                  <Cell key={index} fill={CATEGORY_COLORS[d.category]} opacity={.8} />
                 ))}
               </Pie>
 
@@ -68,6 +75,7 @@ const CategorySpendPie = () => {
                 layout='vertical'
                 align='left'
                 verticalAlign='middle'
+                fontSize={.4}
                 wrapperStyle={{ paddingLeft: '10px' }}
                 itemSorter={(item) =>
                   -((item?.payload as any)?.value ?? 0)

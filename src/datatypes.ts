@@ -56,21 +56,43 @@ export interface PaymentResponse {
   updated_at: Date;
 }
 
+export interface DashboardCard {
+  title: string;
+  subTitle: string;
+  backgroundColor: string;
+}
+
+export type Statistics = Record<string, DashboardCard>;
+
 export interface InitialState {
   user: UserResponse | null,
   payments: PaymentResponse[],
   transactions: TransactionResponse[],
+  statistics: Statistics,
+  overviewChart: TransactionGroupByDay[],
+  pieChart: PieChartData[],
 }
 
 export const StoreActions = {
   UPDATE_USER: 'update_user',
   UPDATE_PAYMENTS: 'update_payments',
   UPDATE_TRANSACTIONS: 'update_transactions',
+  UPDATE_STATISTICS: 'update_statistics',
+  UPDATE_OVERVIEW_CHART: 'update_overview_chart',
+  UPDATE_PIE_CHART: 'update_pie_chart',
 } as const;
 
 export type StoreActions = typeof StoreActions[keyof typeof StoreActions];
 
 export type AmountByCategory = Record<keyof typeof AMOUNT_CATEGORIES, number>;
+
+export type TransactionGroupByDay = { day: string, amount: number };
+
+export type PieChartData = {
+  category: string,
+  value: number,
+  name: string,
+};
 
 export const modalTypes = {
   Transaction: 'transaction',

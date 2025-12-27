@@ -1,4 +1,4 @@
-import type { Transaction, TransactionResponse } from "../datatypes";
+import type { Transaction, TransactionResponse, TransactionGroupByDay } from "../datatypes";
 
 export async function addTransaction(transaction: Transaction) {
   const res = await fetch(`http://localhost:3000/transactions`, {
@@ -28,7 +28,7 @@ export async function getAllTransactions(userId: string, days?: number): Promise
   return body.data;
 }
 
-export async function getAllTransactionsGroupByDay(userId: string, days?: number): Promise<{ day: string, amount: number }[]> {
+export async function getAllTransactionsGroupByDay(userId: string, days?: number): Promise<TransactionGroupByDay[]> {
   let url = `http://localhost:3000/transactions/${userId}/group-by-day?days=${days}`
   const res = await fetch(url, {
     method: 'GET',

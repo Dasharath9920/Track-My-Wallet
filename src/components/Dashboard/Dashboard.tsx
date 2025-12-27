@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import AmountCard from '../AmountCard/AmountCard';
 import './Dashboard.css'
-import { data } from './data';
 import { modalTypes } from '../../datatypes';
 import MonthlyPayment from '../Modals/MonthlyPayment';
 import Transaction from '../Modals/Transaction';
@@ -9,9 +7,9 @@ import OverviewChart from '../Chart/OverviewChart';
 import CategorySpendPie from '../Chart/CategorySpendPie';
 import Transactions from '../Transactions/Transactions';
 import Payments from '../Payments/Payments';
+import DashboardStatistics from '../AmountCard/DashboardStatistics';
 
 const Dashboard = () => {
-
   const [open, setOpen] = useState(false);
   const [modalType, setModalType] = useState<modalTypes>(modalTypes.Transaction);
 
@@ -32,9 +30,7 @@ const Dashboard = () => {
       </div>
 
       <div className='card-container'>
-        {data.map(card => {
-          return <AmountCard key={card.title} title={card.title} subTitle={card.subTitle} heading={card.heading} backgroundColor={card.backgroundColor} />
-        })}
+        <DashboardStatistics />
       </div>
 
       <div className='card-container'>

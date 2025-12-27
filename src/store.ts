@@ -3,8 +3,11 @@ import { StoreActions, type InitialState } from "./datatypes"
 
 const initialState: InitialState = {
   user: null,
-  payments: [],
+  payments: [] = [],
   transactions: [],
+  statistics: {},
+  overviewChart: [],
+  pieChart: [],
 };
 
 const reducer = (state = initialState, action: { data: any, type: StoreActions }) => {
@@ -17,6 +20,15 @@ const reducer = (state = initialState, action: { data: any, type: StoreActions }
     }
     case StoreActions.UPDATE_TRANSACTIONS: {
       return { ...state, transactions: action.data };
+    }
+    case StoreActions.UPDATE_STATISTICS: {
+      return { ...state, statistics: action.data };
+    }
+    case StoreActions.UPDATE_OVERVIEW_CHART: {
+      return { ...state, overviewChart: action.data };
+    }
+    case StoreActions.UPDATE_PIE_CHART: {
+      return { ...state, pieChart: action.data };
     }
     default: return state;
   }

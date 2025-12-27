@@ -1,6 +1,7 @@
 import { initialTotals } from "./constants";
 import { getAllTransactions } from "./core/transaction-web";
 import type { AmountByCategory } from "./datatypes";
+import { getDashboardStatistics } from "./core/statistics-web";
 
 export const getNextDueDate = (dueDay: string) => {
   const day = Number(dueDay.split('T')[0].split('-')[2] ?? 0);
@@ -26,5 +27,32 @@ export const getLastNDaysDataGroupByCategory = async (userId: string, days: numb
   }, { ...initialTotals });
 
 
+  return data;
+}
+
+export const dashboardStatistics = async (userId: string) => {
+  const statistics = await getDashboardStatistics(userId);
+  const data = {
+    ['Total Balance']: {
+      title: '₹8420',
+      subTitle: '+₹1230 This Month',
+      backgroundColor: '#3f6e86',
+    },
+    ['Monthly Spending']: {
+      title: `₹${statistics.totalMonthlySpends}`,
+      subTitle: `+₹${statistics.totalMonthlySpends} This Month`,
+      backgroundColor: '#515f90',
+    },
+    ['Top Category']: {
+      title: statistics.topCategory,
+      subTitle: `₹${statistics.topAmount} This Month`,
+      backgroundColor: '#c88d2b',
+    },
+    ['Upcoming Bills']: {
+      title: '3 Bills Due',
+      subTitle: '₹14700',
+      backgroundColor: '#97385b',
+    },
+  }
   return data;
 }

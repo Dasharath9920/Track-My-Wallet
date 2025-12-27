@@ -4,31 +4,40 @@ import Card from "../Card/Card";
 import { useEffect, useState } from "react";
 import { USERID } from "../../constants";
 import { getAllTransactionsGroupByDay } from "../../core/transaction-web";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreActions, type InitialState } from "../../datatypes";
 
 const OverviewChart = () => {
-
-  const [data, setChartData] = useState<any[]>([]);
+  const overviewChartData = useSelector((state: InitialState) => state.overviewChart);
+  const transactions = useSelector((state: InitialState) => state.transactions);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       const userId = localStorage.getItem(USERID);
       if (userId) {
-        const res = await getAllTransactionsGroupByDay(userId, 30);
-        setChartData(res);
+        try {
+          const data = await getAllTransactionsGroupByDay(userId, 30);
+          dispatch({
+            type: StoreActions.UPDATE_OVERVIEW_CHART,
+            data
+          });
+        } catch (err) {
+          console.error('failed to fetch statistics: ', err);
+        }
       }
       setLoading(false);
     }
-
     fetchData();
-  }, []);
+  }, [transactions]);
 
   const options: ApexOptions = {
     chart: {
       type: "area",
       toolbar: { show: false },
       zoom: { enabled: true },
-      foreColor: "#adaf9cff",
+      foreColor: "#535353ff",
     },
 
     stroke: {
@@ -49,8 +58,8 @@ const OverviewChart = () => {
     },
 
     grid: {
-      borderColor: "#1F2937",
-      strokeDashArray: 4,
+      borderColor: "#ff001eff",
+      strokeDashArray: 3,
     },
 
     dataLabels: { enabled: false },
@@ -64,7 +73,7 @@ const OverviewChart = () => {
     },
 
     xaxis: {
-      categories: data.map(d => d.day),
+      categories: overviewChartData.map(d => d.day),
       title: { text: "Day of Month" },
     },
 
@@ -77,7 +86,7 @@ const OverviewChart = () => {
   const series = [
     {
       name: "Amount Spent",
-      data: data.map(d => d.amount),
+      data: overviewChartData.map(d => d.amount),
     },
   ];
 

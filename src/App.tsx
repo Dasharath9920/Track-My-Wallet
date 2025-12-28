@@ -39,6 +39,8 @@ function App() {
     if (user) {
       localStorage.setItem(USERID, user.user_id);
       navigate('/home');
+    } else {
+      navigate('/user-login');
     }
   }, [user]);
 

@@ -8,6 +8,7 @@ import { getDashboardStatistics } from '../../core/statistics-web';
 
 const DashboardStatistics = () => {
   const statistics = useSelector((state: InitialState) => state.statistics);
+  const transactions = useSelector((state: InitialState) => state.transactions);
   const upcomingPayments = useSelector((state: InitialState) => state.upcomingPayments);
   const dispatch = useDispatch();
   async function fetchStatistics() {
@@ -23,7 +24,7 @@ const DashboardStatistics = () => {
   }
   useEffect(() => {
     fetchStatistics();
-  }, [upcomingPayments]);
+  }, [upcomingPayments, transactions]);
   return (
     <>
       {

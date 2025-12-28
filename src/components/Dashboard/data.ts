@@ -29,3 +29,5 @@ export const CATEGORY_COLORS: Record<string, string> = {
   Debt: "#DC2626",               // danger red · financial alert
   Other: "#6B7280",              // elegant muted slate gray
 };
+
+export const MENU_LIST: Array<string> = ['Logout'];

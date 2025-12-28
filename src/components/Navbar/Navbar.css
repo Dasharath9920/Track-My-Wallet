@@ -3,6 +3,42 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2px 20px;
+  padding: 4px 20px;
   border-bottom: 1px solid lightgrey;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 10;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.user-name {
+  font-weight: 500;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu:hover {
+  transform: scale(1.1);
+}
+
+.logout-btn {
+  color: red;
+  font-size: .9rem;
+  transition: .2s ease all;
+  font-weight: 500;
+}
+
+.logout-btn:hover {
+  transform: scale(1.02);
 }

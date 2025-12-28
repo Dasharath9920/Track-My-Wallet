@@ -33,12 +33,12 @@ const Dashboard = () => {
         <DashboardStatistics />
       </div>
 
-      <div className='card-container'>
+      <div className='card-container two-third-layout'>
         <OverviewChart />
         <Payments />
       </div>
 
-      <div className="card-container transaction-summary-container">
+      <div className="card-container transaction-summary-container one-third-layout">
         <Transactions />
         <CategorySpendPie />
       </div>

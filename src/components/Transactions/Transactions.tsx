@@ -4,6 +4,7 @@ import { StoreActions, type InitialState } from '../../datatypes';
 import { useEffect, useState } from 'react';
 import { getAllTransactions } from '../../core/transaction-web';
 import { USERID } from '../../constants';
+import { formatINR } from '../../utils';
 
 const Transactions = () => {
   const [loading, setLoading] = useState(true);
@@ -39,7 +40,7 @@ const Transactions = () => {
                 <h4 className='payment-name'>{transaction.category}</h4>
                 <p className='payment-subtext'>{transaction.date_of_transaction.split('T')[0]}</p>
               </div>
-              <h3 className='payment-pill'>₹{transaction.amount}</h3>
+              <h3 className='payment-pill'>{formatINR(transaction.amount)}</h3>
             </li>
           })
           }

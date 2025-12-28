@@ -1,6 +1,6 @@
 import { initialTotals } from "./constants";
 import { getAllTransactions } from "./core/transaction-web";
-import type { AmountByCategory, PaymentResponse, Statistics } from "./datatypes";
+import type { AmountByCategory, PaymentResponse, Statistics, StatisticsResponse } from "./datatypes";
 
 export const getNextDueDate = (dueDay: string) => {
   const day = Number(dueDay.split('T')[0].split('-')[2] ?? 0);
@@ -29,26 +29,26 @@ export const getLastNDaysDataGroupByCategory = async (userId: string, days: numb
   return data;
 }
 
-export const dashboardStatistics = (statistics: Statistics, upcomingPayments: PaymentResponse[]) => {
+export const dashboardStatistics = (statistics: StatisticsResponse, upcomingPayments: PaymentResponse[]) => {
   const data = {
     ['Total Balance']: {
-      title: '₹8420',
-      subTitle: '+₹1230 This Month',
+      title: '₹0',
+      subTitle: '+₹0 This Month',
       backgroundColor: '#3f6e86',
     },
     ['Monthly Spending']: {
-      title: `₹${statistics.totalMonthlySpends}`,
-      subTitle: `+₹${statistics.totalMonthlySpends} This Month`,
+      title: `${formatINR(statistics.totalMonthlySpends)}`,
+      subTitle: `+${formatINR(statistics.totalMonthlySpends)} This Month`,
       backgroundColor: '#515f90',
     },
     ['Top Category']: {
       title: statistics.topCategory,
-      subTitle: `₹${statistics.topAmount} This Month`,
+      subTitle: `${formatINR(statistics.topAmount)} This Month`,
       backgroundColor: '#c88d2b',
     },
     ['Upcoming Bills']: {
       title: `${upcomingPayments.length} Bills Due`,
-      subTitle: upcomingPayments.reduce((acc, payment) => acc + Number(payment.amount), 0),
+      subTitle: formatINR(upcomingPayments.reduce((acc, payment) => acc + Number(payment.amount), 0)),
       backgroundColor: '#97385b',
     },
   }
@@ -58,8 +58,8 @@ export const dashboardStatistics = (statistics: Statistics, upcomingPayments: Pa
 export const getEmptyStats = (): Statistics => {
   const data = {
     ['Total Balance']: {
-      title: '₹8420',
-      subTitle: '+₹1230 This Month',
+      title: '₹0',
+      subTitle: '+0 This Month',
       backgroundColor: '#3f6e86',
     },
     ['Monthly Spending']: {
@@ -79,4 +79,21 @@ export const getEmptyStats = (): Statistics => {
     },
   }
   return data;
+}
+
+export const getFullName = (firstName: string, lastName: string) => {
+  return `${firstName} ${lastName}`;
+}
+
+export const formatINR = (value: number | string) => {
+  let amount = value;
+  if (typeof value === 'string') {
+    amount = Number(value);
+  }
+  return amount.toLocaleString('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
 }

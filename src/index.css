@@ -5,10 +5,9 @@
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-.flex-sp-btw {
+.flex {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .btn {

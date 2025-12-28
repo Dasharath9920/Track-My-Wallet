@@ -64,6 +64,12 @@ export interface DashboardCard {
 
 export type Statistics = Record<string, DashboardCard>;
 
+export type StatisticsResponse = {
+  totalMonthlySpends: number,
+  topCategory: string,
+  topAmount: number,
+}
+
 export interface InitialState {
   user: UserResponse | null,
   payments: PaymentResponse[],

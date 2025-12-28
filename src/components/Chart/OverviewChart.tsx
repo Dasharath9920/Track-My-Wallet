@@ -6,6 +6,7 @@ import { USERID } from "../../constants";
 import { getAllTransactionsGroupByDay } from "../../core/transaction-web";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreActions, type InitialState } from "../../datatypes";
+import { formatINR } from "../../utils";
 
 const OverviewChart = () => {
   const overviewChartData = useSelector((state: InitialState) => state.overviewChart);
@@ -68,7 +69,7 @@ const OverviewChart = () => {
       theme: "dark",
       style: { fontSize: "14px" },
       y: {
-        formatter: (value: any) => `₹${value}`,
+        formatter: (value: any) => formatINR(value),
       },
     },
 
@@ -79,7 +80,7 @@ const OverviewChart = () => {
 
     yaxis: {
       title: { text: "Amount Spent" },
-      labels: { formatter: (v: any) => `₹${v}` },
+      labels: { formatter: (v: any) => formatINR(v) },
     }
   };
 

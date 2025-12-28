@@ -1,7 +1,7 @@
 import Card from '../Card/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreActions, type InitialState } from '../../datatypes';
-import { getNextDueDate } from '../../utils';
+import { formatINR, getNextDueDate } from '../../utils';
 import { useEffect, useState } from 'react';
 import { USERID } from '../../constants';
 import { getUpcomingPayments } from '../../core/payment-web';
@@ -39,8 +39,8 @@ const Payments = () => {
                 <h4 className='payment-name'>{payment.name}</h4>
                 <p className='payment-subtext'>Due: {getNextDueDate(payment.due_date)}</p>
               </div>
-              <div className='payment-field'>
-                <h3 className='payment-pill'>₹{payment.amount}</h3>
+              <div className='payment-field payment-field-right'>
+                <h3 className='payment-pill'>{formatINR(payment.amount)}</h3>
                 <p className='payment-subtext'>Paid {payment.total_months - payment.months_remaining}/{payment.total_months} months</p>
               </div>
             </li>

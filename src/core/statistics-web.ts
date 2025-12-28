@@ -1,4 +1,6 @@
-export const getDashboardStatistics = async (userId: string) => {
+import type { StatisticsResponse } from "../datatypes";
+
+export const getDashboardStatistics = async (userId: string): Promise<StatisticsResponse> => {
   const url = `http://localhost:3000/dashboard/${userId}/statistics`;
   const res = await fetch(url, { method: 'GET' });
   if (!res.ok) {

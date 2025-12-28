@@ -1,6 +1,6 @@
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { CATEGORY_COLORS } from '../Dashboard/data';
-import { getLastNDaysDataGroupByCategory } from '../../utils';
+import { formatINR, getLastNDaysDataGroupByCategory } from '../../utils';
 import { useEffect, useState } from 'react';
 import { USERID } from '../../constants';
 import Card from '../Card/Card';
@@ -21,7 +21,7 @@ const CategorySpendPie = () => {
         const data = Object.keys(res).map(key => ({
           category: key,
           value: res[key],
-          name: `${key}: ₹${res[key]}`
+          name: `${key}: ${formatINR(res[key])}`
         }));
         dispatch({
           type: StoreActions.UPDATE_PIE_CHART,
@@ -63,7 +63,7 @@ const CategorySpendPie = () => {
               </Pie>
 
               <Tooltip
-                formatter={(value) => `₹${value}`}
+                formatter={(value) => formatINR(value as string)}
                 contentStyle={{
                   background: "#7494daff",
                   border: "1px solid #374151",

@@ -11,6 +11,16 @@
   margin-bottom: 20px;
 }
 
+.one-third-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.two-third-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
 .transaction-summary-container .content-container {
   height: 300px;
 }
@@ -95,13 +105,14 @@
 }
 
 .payment-pill {
-  width: 100px;
+  width: 80px;
   margin: 0;
-  font-size: 1rem;
+  font-size: .8rem;
   padding: 2px;
   border-radius: 99px;
-  background-color: #61d5a2;
+  background-color: #9098f7;
   text-align: center;
+  color: white;
 }
 
 .payment-subtext {
@@ -115,4 +126,8 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
+}
+
+.payment-field-right {
+  align-items: flex-end;
 }

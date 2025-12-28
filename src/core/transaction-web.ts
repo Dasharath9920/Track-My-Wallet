@@ -1,7 +1,8 @@
 import type { Transaction, TransactionResponse, TransactionGroupByDay } from "../datatypes";
+const API = import.meta.env.VITE_APIURL;
 
 export async function addTransaction(transaction: Transaction) {
-  const res = await fetch(`http://localhost:3000/transactions`, {
+  const res = await fetch(`${API}/transactions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -12,9 +13,9 @@ export async function addTransaction(transaction: Transaction) {
 }
 
 export async function getAllTransactions(userId: string, days?: number): Promise<TransactionResponse[]> {
-  let url = `http://localhost:3000/transactions/${userId}`;
+  let url = `{${API}}/transactions/${userId}`;
   if (days) {
-    url = `http://localhost:3000/transactions/${userId}?days=${days}`
+    url = `${API}/transactions/${userId}?days=${days}`
   }
   const res = await fetch(url, {
     method: 'GET',
@@ -29,7 +30,7 @@ export async function getAllTransactions(userId: string, days?: number): Promise
 }
 
 export async function getAllTransactionsGroupByDay(userId: string, days?: number): Promise<TransactionGroupByDay[]> {
-  let url = `http://localhost:3000/transactions/${userId}/group-by-day?days=${days}`
+  let url = `${API}/transactions/${userId}/group-by-day?days=${days}`
   const res = await fetch(url, {
     method: 'GET',
   });

@@ -1,7 +1,9 @@
 import type { StatisticsResponse } from "../datatypes";
+const API = import.meta.env.VITE_APIURL;
+
 
 export const getDashboardStatistics = async (userId: string): Promise<StatisticsResponse> => {
-  const url = `http://localhost:3000/dashboard/${userId}/statistics`;
+  const url = `${API}/dashboard/${userId}/statistics`;
   const res = await fetch(url, { method: 'GET' });
   if (!res.ok) {
     throw new Error('Failed to fetch Dashboard Statistics');

@@ -1,7 +1,8 @@
 import type { Payment } from "../datatypes";
+const API = import.meta.env.VITE_APIURL;
 
 export const addPayment = async (payment: Payment) => {
-  const res = await fetch(`http://localhost:3000/payments`, {
+  const res = await fetch(`${API}/payments`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -13,7 +14,7 @@ export const addPayment = async (payment: Payment) => {
 }
 
 export async function getAllPayments(userId: string) {
-  let url = `http://localhost:3000/payments/${userId}`;
+  let url = `${API}/payments/${userId}`;
   const res = await fetch(url, {
     method: 'GET',
   });
@@ -27,7 +28,7 @@ export async function getAllPayments(userId: string) {
 }
 
 export async function getUpcomingPayments(userId: string) {
-  let url = `http://localhost:3000/payments/${userId}/upcoming`;
+  let url = `${API}/payments/${userId}/upcoming`;
   const res = await fetch(url, {
     method: 'GET',
   });

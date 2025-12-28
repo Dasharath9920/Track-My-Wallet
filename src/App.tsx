@@ -45,7 +45,7 @@ function App() {
   }, [user]);
 
   return (
-    <div>
+    <div className="app">
       <Routes>
         <Route path="/user-login" element={<LoginForm />} />
         <Route path="/home" element={<>

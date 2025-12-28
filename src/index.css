@@ -1,6 +1,13 @@
-* {
-  padding: 0;
+html,
+body,
+#root {
+  width: 100%;
+  height: auto;
   margin: 0;
+  padding: 0;
+}
+
+* {
   box-sizing: border-box;
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
@@ -41,4 +48,10 @@
   border: none;
   outline: none;
   color: rgb(19, 129, 255);
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }

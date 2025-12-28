@@ -2,7 +2,7 @@ import { initialTotals } from "./constants";
 import { getAllTransactions } from "./core/transaction-web";
 import type { AmountByCategory, PaymentResponse, Statistics, StatisticsResponse } from "./datatypes";
 
-export const getNextDueDate = (dueDay: string) => {
+export const getNextDueDate = (dueDay: string): string => {
   const day = Number(dueDay.split('T')[0].split('-')[2] ?? 0);
   const date = new Date();
   const today = date.getDate();
@@ -81,7 +81,7 @@ export const getEmptyStats = (): Statistics => {
   return data;
 }
 
-export const getFullName = (firstName: string, lastName: string) => {
+export const getFullName = (firstName: string, lastName: string): string => {
   return `${firstName} ${lastName}`;
 }
 
@@ -96,4 +96,9 @@ export const formatINR = (value: number | string) => {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   });
+}
+
+export const isMobileDevice = (): boolean => {
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  return isMobile;
 }

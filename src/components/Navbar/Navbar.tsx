@@ -3,7 +3,7 @@ import './Navbar.css';
 import logo from '../../public/assets/track-my-wallet-logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreActions, type InitialState } from '../../datatypes';
-import { getFullName } from '../../utils';
+import { getFullName, isMobileDevice } from '../../utils';
 import { USERID } from '../../constants';
 
 const Navbar = () => {
@@ -22,13 +22,15 @@ const Navbar = () => {
   return (
     <nav className='navbar'>
       <img src={logo} alt="" height={50} />
-      <div className='navbar-right'>
-        <div className='user-profile'>
-          <h4 className='user-name'>{userName}</h4>
-          <Avatar height={30} width={30} />
+      {isMobileDevice() ? <button className="btn-link logout-btn" onClick={onLogoutClick}>Logout</button> :
+        <div className='navbar-right'>
+          <div className='user-profile'>
+            <h4 className='user-name'>{userName}</h4>
+            <Avatar height={30} width={30} />
+          </div>
+          <button className="btn-link logout-btn" onClick={onLogoutClick}>Logout</button>
         </div>
-        <button className="btn-link logout-btn" onClick={onLogoutClick}>Logout</button>
-      </div>
+      }
     </nav>
   )
 }

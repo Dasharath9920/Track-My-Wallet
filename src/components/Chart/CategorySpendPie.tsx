@@ -1,6 +1,6 @@
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { CATEGORY_COLORS } from '../Dashboard/data';
-import { formatINR, getLastNDaysDataGroupByCategory } from '../../utils';
+import { formatINR, getLastNDaysDataGroupByCategory, isMobileDevice } from '../../utils';
 import { useEffect, useState } from 'react';
 import { USERID } from '../../constants';
 import Card from '../Card/Card';
@@ -47,18 +47,18 @@ const CategorySpendPie = () => {
                 data={chartData}
                 dataKey="value"
                 nameKey="name"
-                cx="50%"
+                cx={isMobileDevice() ? '20%' : '50%'}
                 cy="50%"
                 outerRadius={120}
                 innerRadius={0}   // makes it donut
                 paddingAngle={0}
                 stroke="#111827"
                 strokeWidth={.5}
-                label={renderLabel}
+                label={isMobileDevice() ? undefined : renderLabel}
                 labelLine={false}
               >
                 {chartData.map((d, index) => (
-                  <Cell key={index} fill={CATEGORY_COLORS[d.category]} opacity={.8} />
+                  <Cell key={index} fill={CATEGORY_COLORS[d.category]} opacity={isMobileDevice() ? .2 : .8} />
                 ))}
               </Pie>
 

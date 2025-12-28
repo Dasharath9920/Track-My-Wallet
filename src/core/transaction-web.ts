@@ -13,7 +13,7 @@ export async function addTransaction(transaction: Transaction) {
 }
 
 export async function getAllTransactions(userId: string, days?: number): Promise<TransactionResponse[]> {
-  let url = `{${API}}/transactions/${userId}`;
+  let url = `${API}/transactions/${userId}`;
   if (days) {
     url = `${API}/transactions/${userId}?days=${days}`
   }

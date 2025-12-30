@@ -9,6 +9,7 @@ import { getUpcomingPayments } from '../../core/payment-web';
 const Payments = () => {
   const [loading, setLoading] = useState(true);
   const payments = useSelector((state: InitialState) => state.upcomingPayments);
+  const hide = useSelector((state: InitialState) => state.hideAmount);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const Payments = () => {
                 <p className='payment-subtext'>Due: {getNextDueDate(payment.due_date)}</p>
               </div>
               <div className='payment-field payment-field-right'>
-                <h3 className='payment-pill'>{formatINR(payment.amount)}</h3>
+                <h3 className='payment-pill'>{hide ? '••••••' : formatINR(payment.amount)}</h3>
                 <p className='payment-subtext'>Paid {payment.total_months - payment.months_remaining}/{payment.total_months} months</p>
               </div>
             </li>

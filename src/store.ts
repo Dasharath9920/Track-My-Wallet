@@ -10,6 +10,7 @@ const initialState: InitialState = {
   overviewChart: [],
   pieChart: [],
   upcomingPayments: [],
+  hideAmount: true,
 };
 
 const reducer = (state = initialState, action: { data: any, type: StoreActions }) => {
@@ -34,6 +35,9 @@ const reducer = (state = initialState, action: { data: any, type: StoreActions }
     }
     case StoreActions.UPDATE_UPCOMING_PAYMENTS: {
       return { ...state, upcomingPayments: action.data };
+    }
+    case StoreActions.UPDATE_HIDE_AMOUNT: {
+      return { ...state, hideAmount: action.data };
     }
     default: return state;
   }

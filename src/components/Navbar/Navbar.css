@@ -41,3 +41,27 @@
 .logout-btn:hover {
   transform: scale(1.02);
 }
+
+.mobile-view-navbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media only screen and (max-width:768px) {
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    border: none;
+    background: transparent;
+    transition: .2s ease all;
+  }
+
+
+  .logout-btn:hover {
+    transform: scale(1.1);
+  }
+}

@@ -1,0 +1,34 @@
+.show-hide {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.show-hide p {
+  margin: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.show-hide-container {
+  height: 20px;
+  width: 36px;
+  border: 2px solid rgb(91, 91, 255);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+
+.show-hide-ball {
+  height: 14px;
+  width: 18px;
+  background-color: rgb(143, 143, 255);
+  border-radius: 999px;
+  transition: .3s ease all;
+}
+
+.show-amount {
+  transform: translateX(10px);
+}

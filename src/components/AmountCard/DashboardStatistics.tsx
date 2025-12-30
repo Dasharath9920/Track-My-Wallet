@@ -8,6 +8,7 @@ import { getDashboardStatistics } from '../../core/statistics-web';
 
 const DashboardStatistics = () => {
   const statistics = useSelector((state: InitialState) => state.statistics);
+  const hide = useSelector((state: InitialState) => state.hideAmount);
   const transactions = useSelector((state: InitialState) => state.transactions);
   const upcomingPayments = useSelector((state: InitialState) => state.upcomingPayments);
   const dispatch = useDispatch();
@@ -32,8 +33,8 @@ const DashboardStatistics = () => {
           return < div key={key} className='amount-card' style={{ backgroundColor: statistics[key].backgroundColor }
           }>
             <p>{key}</p>
-            <h2 style={{ margin: '0' }}>{statistics[key].title}</h2>
-            <p>{statistics[key].subTitle}</p>
+            <h2 style={{ margin: '0' }}>{hide ? '••••••' : statistics[key].title}</h2>
+            <p>{hide ? '••••••' : statistics[key].subTitle}</p>
           </div >
         })
       }

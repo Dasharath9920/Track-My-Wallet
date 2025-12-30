@@ -6,6 +6,8 @@ import { StoreActions, type InitialState } from '../../datatypes';
 import { getFullName, isMobileDevice } from '../../utils';
 import { USERID } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import ShowHidePill from '../ShowHidePill/ShowHidePill';
+import { LOGOUT_ICON } from '../Dashboard/data';
 
 const Navbar = () => {
   const user = useSelector((state: InitialState) => state.user);
@@ -25,12 +27,19 @@ const Navbar = () => {
   return (
     <nav className='navbar'>
       <img src={logo} alt="" height={50} />
-      {isMobileDevice() ? <button className="btn-link logout-btn" onClick={onLogoutClick}>Logout</button> :
+      {isMobileDevice() ?
+        <div className='mobile-view-navbar'>
+          <ShowHidePill />
+          <button className="btn-link logout-btn" onClick={onLogoutClick}>
+            <img src={LOGOUT_ICON} alt="Logout" color='red' width={20} />
+          </button>
+        </div> :
         <div className='navbar-right'>
           <div className='user-profile'>
             <h4 className='user-name'>{userName}</h4>
             <Avatar height={30} width={30} />
           </div>
+          <ShowHidePill />
           <button className="btn-link logout-btn" onClick={onLogoutClick}>Logout</button>
         </div>
       }

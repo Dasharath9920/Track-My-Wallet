@@ -33,3 +33,4 @@ export const CATEGORY_COLORS: Record<string, string> = {
 export const MENU_LIST: Array<string> = ['Logout'];
 
 export const MENU_ICON = 'https://img.icons8.com/ios-glyphs/30/menu--v1.png';
+export const LOGOUT_ICON = 'https://img.icons8.com/fluency-systems-filled/96/ff5b5b/exit.png';

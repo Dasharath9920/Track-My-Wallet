@@ -78,6 +78,7 @@ export interface InitialState {
   overviewChart: TransactionGroupByDay[],
   pieChart: PieChartData[],
   upcomingPayments: PaymentResponse[],
+  hideAmount: boolean;
 }
 
 export const StoreActions = {
@@ -88,6 +89,7 @@ export const StoreActions = {
   UPDATE_OVERVIEW_CHART: 'update_overview_chart',
   UPDATE_PIE_CHART: 'update_pie_chart',
   UPDATE_UPCOMING_PAYMENTS: 'update_upcoming_payments',
+  UPDATE_HIDE_AMOUNT: 'update_hide_amount',
 } as const;
 
 export type StoreActions = typeof StoreActions[keyof typeof StoreActions];

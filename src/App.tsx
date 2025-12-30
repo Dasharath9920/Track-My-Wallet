@@ -20,12 +20,12 @@ function App() {
       try {
         const res = await getUserById(userId);
         if (res.ok) {
-          const user = await res.json();
+          const userData = await res.json();
           dispatch({
             type: StoreActions.UPDATE_USER,
-            data: user.data
+            data: userData.data
           });
-          localStorage.setItem(USERID, user.user_id);
+          localStorage.setItem(USERID, userData.user_id);
           navigate('/');
         } else {
           navigate('/user-login');

@@ -18,12 +18,13 @@ body,
 }
 
 .btn {
-  background-color: transparent;
+  background-color: white;
   border: 1px solid lightgrey;
   padding: 8px 12px;
   border-radius: 4px;
   font-weight: 600;
   cursor: pointer;
+  color: black;
 }
 
 .input-field {

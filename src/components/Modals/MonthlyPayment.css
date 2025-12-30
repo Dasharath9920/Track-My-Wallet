@@ -29,3 +29,9 @@
 .submit-btn:hover {
   background-color: #accdff;
 }
+
+@media only screen and (max-width: 768px) {
+  .monthly-payment-container {
+    width: 95vw;
+  }
+}

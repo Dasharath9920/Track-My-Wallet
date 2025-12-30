@@ -25,7 +25,7 @@ function App() {
             type: StoreActions.UPDATE_USER,
             data: userData.data
           });
-          localStorage.setItem(USERID, userData.user_id);
+          localStorage.setItem(USERID, userData.data.user_id);
           navigate('/');
         } else {
           navigate('/user-login');

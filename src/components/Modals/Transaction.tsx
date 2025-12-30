@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreActions, type InitialState } from '../../datatypes';
 import { AMOUNT_CATEGORIES } from '../Dashboard/data';
 import { addTransaction } from '../../core/transaction-web';
+import TWButton from '../TWButton';
+import { GENERAL_ERROR_MESSAGE } from '../../constants';
 
 const Transaction = ({ onClose }: TransactionProps) => {
   const today = new Date().toISOString().split('T')[0];
+  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const [customCategory, setCustomCategory] = useState('');
@@ -17,6 +20,7 @@ const Transaction = ({ onClose }: TransactionProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const payload = {
       user_id: user!.user_id,
       amount: Number(amount),
@@ -25,14 +29,19 @@ const Transaction = ({ onClose }: TransactionProps) => {
       date_of_transaction: date,
     };
 
-    const res = await addTransaction(payload);
-    if (res.ok) {
-      const transactions = await res.json();
-      dispatch({
-        type: StoreActions.UPDATE_TRANSACTIONS,
-        data: transactions.data
-      });
+    try {
+      const res = await addTransaction(payload);
+      if (res.ok) {
+        const transactions = await res.json();
+        dispatch({
+          type: StoreActions.UPDATE_TRANSACTIONS,
+          data: transactions.data
+        });
+      }
+    } catch (err) {
+      alert(err ?? GENERAL_ERROR_MESSAGE);
     }
+    setLoading(false);
     onClose();
   }
 
@@ -96,7 +105,7 @@ const Transaction = ({ onClose }: TransactionProps) => {
       <div className="footer">
         <div className="modal-btn-group">
           <button type='button' className='btn' onClick={onClose}>Cancel</button>
-          <button type='submit' className='btn submit-btn'>Add Transaction</button>
+          <TWButton type='submit' classes='submit-btn' text='Add Transaction' loading={loading} fontSize='.8rem' />
         </div>
       </div>
     </form>

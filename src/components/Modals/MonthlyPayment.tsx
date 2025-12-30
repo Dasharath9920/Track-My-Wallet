@@ -3,9 +3,12 @@ import './MonthlyPayment.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreActions, type InitialState } from '../../datatypes';
 import { addPayment } from '../../core/payment-web';
+import { GENERAL_ERROR_MESSAGE } from '../../constants';
+import TWButton from '../TWButton';
 
 const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
   const today = new Date().toISOString().split('T')[0];
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [months, setMonths] = useState('');
@@ -17,6 +20,8 @@ const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setLoading(true);
     const payload = {
       user_id: user!.user_id,
       amount: Number(amount),
@@ -26,14 +31,19 @@ const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
       dueDate: dueDay,
     };
 
-    const res = await addPayment(payload);
-    if (res.ok) {
-      const payments = await res.json();
-      dispatch({
-        type: StoreActions.UPDATE_PAYMENTS,
-        data: payments.data
-      });
+    try {
+      const res = await addPayment(payload);
+      if (res.ok) {
+        const payments = await res.json();
+        dispatch({
+          type: StoreActions.UPDATE_PAYMENTS,
+          data: payments.data
+        });
+      }
+    } catch (error) {
+      alert(error ?? GENERAL_ERROR_MESSAGE);
     }
+    setLoading(false);
     onClose();
   }
 
@@ -106,7 +116,7 @@ const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
       <div className="footer">
         <div className="modal-btn-group">
           <button type='button' className='btn' onClick={onClose}>Cancel</button>
-          <button type='submit' className='btn submit-btn'>Add Payment</button>
+          <TWButton type='submit' classes='submit-btn' text='Add Payment' loading={loading} fontSize='.8rem' />
         </div>
       </div>
     </form>

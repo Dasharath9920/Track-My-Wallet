@@ -3,9 +3,11 @@ import './Login.css';
 import { registerUser } from '../../core/user-web';
 import { useDispatch } from 'react-redux';
 import { StoreActions } from '../../datatypes';
-import { USERID } from '../../constants';
+import { GENERAL_ERROR_MESSAGE, USERID } from '../../constants';
+import TWButton from '../TWButton';
 
 const Register = ({ onTabChange }: { onTabChange: (tab: 'login' | 'register') => void }) => {
+  const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -21,6 +23,7 @@ const Register = ({ onTabChange }: { onTabChange: (tab: 'login' | 'register') =>
       return;
     }
 
+    setLoading(true);
     const payload = {
       firstName,
       lastName,
@@ -28,17 +31,23 @@ const Register = ({ onTabChange }: { onTabChange: (tab: 'login' | 'register') =>
       password,
     };
 
-    const res = await registerUser(payload);
-    if (!res.ok) {
-      alert('something went wrong');
-    } else {
-      const data = await res.json();
-      dispatch({
-        type: StoreActions.UPDATE_USER,
-        data
-      });
-      localStorage.setItem(USERID, data.user_id);
+    try {
+      const res = await registerUser(payload);
+      if (!res.ok) {
+        const data = await res.json();
+        alert(data?.message ?? GENERAL_ERROR_MESSAGE);
+      } else {
+        const data = await res.json();
+        dispatch({
+          type: StoreActions.UPDATE_USER,
+          data
+        });
+        localStorage.setItem(USERID, data.user_id);
+      }
+    } catch (err) {
+      alert(GENERAL_ERROR_MESSAGE);
     }
+    setLoading(false);
   }
 
   return (
@@ -114,7 +123,7 @@ const Register = ({ onTabChange }: { onTabChange: (tab: 'login' | 'register') =>
         </button>
       </p>
 
-      <button type='submit' className='btn login-btn'>Register</button>
+      <TWButton type='submit' classes='login-btn' text='Register' loading={loading} />
     </form>
   );
 }

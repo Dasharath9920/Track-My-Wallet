@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreActions, type InitialState } from '../../datatypes';
 import { getFullName, isMobileDevice } from '../../utils';
 import { USERID } from '../../constants';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const user = useSelector((state: InitialState) => state.user);
   const userName = user ? getFullName(user.firstName, user.lastName) : '';
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onLogoutClick = () => {
     dispatch({
@@ -17,6 +19,7 @@ const Navbar = () => {
       data: null
     });
     localStorage.removeItem(USERID);
+    navigate('/user-login');
   }
 
   return (

@@ -8,3 +8,5 @@ export const initialTotals: AmountByCategory = Object.keys(AMOUNT_CATEGORIES)
     acc[AMOUNT_CATEGORIES[key]] = 0;
     return acc;
   }, {} as AmountByCategory);
+
+export const GENERAL_ERROR_MESSAGE = 'Something went wrong';

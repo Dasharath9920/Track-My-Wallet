@@ -5,6 +5,7 @@ import { StoreActions, type InitialState } from '../../datatypes';
 import { addPayment } from '../../core/payment-web';
 import { GENERAL_ERROR_MESSAGE } from '../../constants';
 import TWButton from '../TWButton';
+import { isMobileDevice } from '../../utils';
 
 const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
   const today = new Date().toISOString().split('T')[0];
@@ -116,7 +117,7 @@ const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
       <div className="footer">
         <div className="modal-btn-group">
           <button type='button' className='btn' onClick={onClose}>Cancel</button>
-          <TWButton type='submit' classes='submit-btn' text='Add Payment' loading={loading} fontSize='.8rem' />
+          <TWButton type='submit' classes={isMobileDevice() ? '' : 'submit-btn'} text='Add Payment' loading={loading} fontSize='.8rem' />
         </div>
       </div>
     </form>

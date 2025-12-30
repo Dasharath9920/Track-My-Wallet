@@ -6,6 +6,7 @@ import { AMOUNT_CATEGORIES } from '../Dashboard/data';
 import { addTransaction } from '../../core/transaction-web';
 import TWButton from '../TWButton';
 import { GENERAL_ERROR_MESSAGE } from '../../constants';
+import { isMobileDevice } from '../../utils';
 
 const Transaction = ({ onClose }: TransactionProps) => {
   const today = new Date().toISOString().split('T')[0];
@@ -105,7 +106,7 @@ const Transaction = ({ onClose }: TransactionProps) => {
       <div className="footer">
         <div className="modal-btn-group">
           <button type='button' className='btn' onClick={onClose}>Cancel</button>
-          <TWButton type='submit' classes='submit-btn' text='Add Transaction' loading={loading} fontSize='.8rem' />
+          <TWButton type='submit' classes={isMobileDevice() ? '' : 'submit-btn'} text='Add Transaction' loading={loading} fontSize='.8rem' />
         </div>
       </div>
     </form>

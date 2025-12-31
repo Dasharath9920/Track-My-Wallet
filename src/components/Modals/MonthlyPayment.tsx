@@ -60,7 +60,6 @@ const MonthlyPayment = ({ onClose }: MonthlyPaymentProps) => {
           value={name}
           onChange={e => setName(e.target.value)}
           required
-          autoFocus
           placeholder='Enter payment name' />
       </div>
       <div className="input-field">

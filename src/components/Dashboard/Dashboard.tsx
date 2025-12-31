@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import './Dashboard.css'
-import { modalTypes, type InitialState } from '../../datatypes';
+import { modalTypes, type InitialState, type TransactionResponse } from '../../datatypes';
 import MonthlyPayment from '../Modals/MonthlyPayment';
-import Transaction from '../Modals/Transaction';
 import OverviewChart from '../Chart/OverviewChart';
 import CategorySpendPie from '../Chart/CategorySpendPie';
 import Transactions from '../Transactions/Transactions';
@@ -10,9 +9,11 @@ import Payments from '../Payments/Payments';
 import DashboardStatistics from '../AmountCard/DashboardStatistics';
 import { useSelector } from 'react-redux';
 import { getFullName, isMobileDevice } from '../../utils';
+import TransactionModal from '../Modals/TransactionModal';
 
 const Dashboard = () => {
   const user = useSelector((state: InitialState) => state.user);
+  const [editTransaction, setEditTransaction] = useState<TransactionResponse | null>(null);
   const [open, setOpen] = useState(false);
   const [modalType, setModalType] = useState<modalTypes>(modalTypes.Transaction);
 
@@ -20,6 +21,12 @@ const Dashboard = () => {
     const openModal = !open;
     setOpen(openModal);
     setModalType(modalType);
+  }
+
+  const onTransactionEdit = (transaction: TransactionResponse) => {
+    setEditTransaction(transaction);
+    setOpen(true);
+    setModalType(modalTypes.Transaction);
   }
 
   return (
@@ -42,7 +49,7 @@ const Dashboard = () => {
       </div>
 
       <div className={`card-container transaction-summary-container ${!isMobileDevice() ? 'one-third-layout' : ''}`}>
-        <Transactions />
+        <Transactions onEdit={onTransactionEdit} />
         <CategorySpendPie />
       </div>
 
@@ -50,7 +57,7 @@ const Dashboard = () => {
         <MonthlyPayment onClose={() => setOpen(false)} />
       </div>}
       {open && modalType === modalTypes.Transaction && <div className='modal-container'>
-        <Transaction onClose={() => setOpen(false)} />
+        <TransactionModal onClose={() => setOpen(false)} transaction={editTransaction} />
       </div>}
     </div>
   )

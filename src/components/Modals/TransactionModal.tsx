@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import './MonthlyPayment.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { StoreActions, type InitialState } from '../../datatypes';
+import { StoreActions, type InitialState, type Transaction, type TransactionResponse } from '../../datatypes';
 import { AMOUNT_CATEGORIES } from '../Dashboard/data';
-import { addTransaction } from '../../core/transaction-web';
+import { addTransaction, updateTransaction } from '../../core/transaction-web';
 import TWButton from '../TWButton';
 import { GENERAL_ERROR_MESSAGE } from '../../constants';
 import { isMobileDevice } from '../../utils';
 
-const Transaction = ({ onClose }: TransactionProps) => {
+const TransactionModal = ({ onClose, transaction }: TransactionProps) => {
   const today = new Date().toISOString().split('T')[0];
   const [loading, setLoading] = useState(false);
-  const [category, setCategory] = useState('');
-  const [amount, setAmount] = useState('');
-  const [customCategory, setCustomCategory] = useState('');
-  const [date, setDate] = useState(today);
+  const [category, setCategory] = useState(transaction?.category ?? '');
+  const [amount, setAmount] = useState(transaction?.amount ?? '');
+  const [customCategory, setCustomCategory] = useState(transaction?.customCategory ?? '');
+  const [date, setDate] = useState(transaction?.date_of_transaction ? transaction.date_of_transaction.split('T')[0] : today);
   const user = useSelector((state: InitialState) => state.user);
 
   const dispatch = useDispatch();
@@ -22,16 +22,23 @@ const Transaction = ({ onClose }: TransactionProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const payload = {
-      user_id: user!.user_id,
-      amount: Number(amount),
-      category,
-      customCategory,
-      date_of_transaction: date,
-    };
+    const payload = transaction ?
+      {
+        ...transaction,
+        amount: Number(amount),
+        category,
+        customCategory,
+        date_of_transaction: date,
+      } as TransactionResponse : {
+        user_id: user!.user_id,
+        amount: Number(amount),
+        category,
+        customCategory,
+        date_of_transaction: date,
+      } as Transaction;
 
     try {
-      const res = await addTransaction(payload);
+      const res = transaction ? await updateTransaction(transaction.user_id, payload as TransactionResponse) : await addTransaction(payload as Transaction);
       if (res.ok) {
         const transactions = await res.json();
         dispatch({
@@ -115,6 +122,7 @@ const Transaction = ({ onClose }: TransactionProps) => {
 
 type TransactionProps = {
   onClose: () => void;
+  transaction?: TransactionResponse | null
 }
 
-export default Transaction;
+export default TransactionModal;

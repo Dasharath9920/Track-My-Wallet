@@ -115,6 +115,13 @@
   color: white;
 }
 
+.payment-left {
+  flex: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .payment-subtext {
   font-size: .7rem;
   font-style: italic;
@@ -130,6 +137,22 @@
 
 .payment-field-right {
   align-items: flex-end;
+}
+
+.action-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 3;
+  justify-content: flex-end;
+}
+
+.action-btn-group button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 @media only screen and (max-width: 768px) {

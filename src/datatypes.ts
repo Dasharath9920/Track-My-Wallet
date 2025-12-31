@@ -38,7 +38,7 @@ export interface TransactionResponse {
   user_id: string;
   category: keyof typeof AMOUNT_CATEGORIES;
   amount: number;
-  customCategory?: string;
+  custom_category?: string;
   date_of_transaction: string;
   created_at: Date;
   updated_at: Date;

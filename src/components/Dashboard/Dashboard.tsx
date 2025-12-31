@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [modalType, setModalType] = useState<modalTypes>(modalTypes.Transaction);
 
   const handleToggleModal = (modalType: modalTypes) => {
+    setEditTransaction(null);
     const openModal = !open;
     setOpen(openModal);
     setModalType(modalType);

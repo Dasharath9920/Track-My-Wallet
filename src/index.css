@@ -76,6 +76,17 @@ body,
   animation: spin .8s linear infinite;
 }
 
+.btn-loader {
+  width: 0.9em;
+  height: 0.9em;
+  border: 0.15em solid rgb(159, 159, 159);
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  display: inline-block;
+  margin: 0px 4px;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);

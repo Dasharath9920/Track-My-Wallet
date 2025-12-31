@@ -9,11 +9,12 @@ import { GENERAL_ERROR_MESSAGE } from '../../constants';
 import { isMobileDevice } from '../../utils';
 
 const TransactionModal = ({ onClose, transaction }: TransactionProps) => {
+  console.log("here: ", transaction);
   const today = new Date().toISOString().split('T')[0];
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState(transaction?.category ?? '');
   const [amount, setAmount] = useState(transaction?.amount ?? '');
-  const [customCategory, setCustomCategory] = useState(transaction?.customCategory ?? '');
+  const [customCategory, setCustomCategory] = useState(transaction?.custom_category ?? '');
   const [date, setDate] = useState(transaction?.date_of_transaction ? transaction.date_of_transaction.split('T')[0] : today);
   const user = useSelector((state: InitialState) => state.user);
 

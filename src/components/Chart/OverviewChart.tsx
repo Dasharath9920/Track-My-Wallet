@@ -12,6 +12,7 @@ const OverviewChart = () => {
   const overviewChartData = useSelector((state: InitialState) => state.overviewChart);
   const transactions = useSelector((state: InitialState) => state.transactions);
   const dispatch = useDispatch();
+  const [filter, setFilter] = useState<number>(7);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const OverviewChart = () => {
       const userId = localStorage.getItem(USERID);
       if (userId) {
         try {
-          const data = await getAllTransactionsGroupByDay(userId, 30);
+          const data = await getAllTransactionsGroupByDay(userId, filter);
           dispatch({
             type: StoreActions.UPDATE_OVERVIEW_CHART,
             data
@@ -31,7 +32,7 @@ const OverviewChart = () => {
       setLoading(false);
     }
     fetchData();
-  }, [transactions]);
+  }, [transactions, filter]);
 
   const options: ApexOptions = {
     chart: {
@@ -92,7 +93,7 @@ const OverviewChart = () => {
   ];
 
   return (
-    <Card heading="Spending Overview" loading={loading}>
+    <Card heading="Spending Overview" loading={loading} onFilterChange={(value) => setFilter(value)}>
       <div className='content-container'>
         <div style={{ width: "100%", height: 200 }}>
           <Chart options={options} series={series} type="area" height="100%" />

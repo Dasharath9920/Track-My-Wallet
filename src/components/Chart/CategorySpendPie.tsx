@@ -10,6 +10,7 @@ import { StoreActions, type InitialState } from '../../datatypes';
 const CategorySpendPie = () => {
   const chartData = useSelector((state: InitialState) => state.pieChart);
   const transactions = useSelector((state: InitialState) => state.transactions);
+  const [filter, setFilter] = useState<number>(7);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +18,7 @@ const CategorySpendPie = () => {
     async function fetchData() {
       const userId = localStorage.getItem(USERID);
       if (userId) {
-        const res = await getLastNDaysDataGroupByCategory(userId, 30);
+        const res = await getLastNDaysDataGroupByCategory(userId, filter);
         const data = Object.keys(res).map(key => ({
           category: key,
           value: res[key],
@@ -32,13 +33,13 @@ const CategorySpendPie = () => {
     }
 
     fetchData();
-  }, [transactions]);
+  }, [transactions, filter]);
 
   const renderLabel = ({ percent }: { percent?: number }) =>
     `${((percent ?? 0) * 100).toFixed(0)}%`;
 
   return (
-    <Card heading="Expense Breakdown" loading={loading}>
+    <Card heading="Expense Breakdown" loading={loading} onFilterChange={(value) => setFilter(value)}>
       <div className='content-container'>
         <div style={{ width: "100%", height: 300 }}>
           <ResponsiveContainer>

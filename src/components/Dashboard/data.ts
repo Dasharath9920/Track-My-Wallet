@@ -30,6 +30,34 @@ export const CATEGORY_COLORS: Record<string, string> = {
   Other: "#6B7280",              // elegant muted slate gray
 };
 
+export const TIME_PERIODS = [
+  {
+    label: "7 Days",
+    value: 7,
+    id: "dataFor7Days",
+  },
+  {
+    label: "30 Days",
+    value: 30,
+    id: "dataFor30Days",
+  },
+  {
+    label: "6 Months",
+    value: 6 * 30,
+    id: "dataFor6Months",
+  },
+  {
+    label: "1 Year",
+    value: 12 * 30,
+    id: "dataFor12Months",
+  },
+  {
+    label: "5 Years",
+    value: 5 * 365,
+    id: "dataFor5Years",
+  },
+];
+
 export const MENU_LIST: Array<string> = ['Logout'];
 
 export const MENU_ICON = 'https://img.icons8.com/ios-glyphs/30/menu--v1.png';

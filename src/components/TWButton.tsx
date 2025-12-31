@@ -12,6 +12,8 @@ const TWButton: React.FC<TWButtonProps> = (props: TWButtonProps) => {
         fontSize,
         display: "flex",
         alignItems: "center",
+        justifyContent: "center",
+        gap: loading ? '8px' : '0',
       }}
       onClick={onClick}
       disabled={loading}

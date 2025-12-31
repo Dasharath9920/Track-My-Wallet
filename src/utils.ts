@@ -1,6 +1,6 @@
 import { initialTotals } from "./constants";
 import { getAllTransactions } from "./core/transaction-web";
-import type { AmountByCategory, PaymentResponse, Statistics, StatisticsResponse } from "./datatypes";
+import type { AmountByCategory, FilteredTransactions, PaymentResponse, Statistics, StatisticsResponse, TransactionResponse } from "./datatypes";
 
 export const getNextDueDate = (dueDay: string): string => {
   const day = Number(dueDay.split('T')[0].split('-')[2] ?? 0);
@@ -101,4 +101,21 @@ export const formatINR = (value: number | string) => {
 export const isMobileDevice = (): boolean => {
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
   return isMobile;
+}
+
+export const groupTransactionsByDate = (transactions: TransactionResponse[]): FilteredTransactions => {
+  const data: FilteredTransactions = {};
+  transactions.forEach(transaction => {
+    const key = transaction.date_of_transaction.split('T')[0];
+    if (!data[key]) {
+      data[key] = {
+        totalAmount: 0,
+        data: []
+      };
+    }
+    data[key].data.push(transaction);
+    data[key].totalAmount += Number(transaction.amount);
+  });
+
+  return data;
 }

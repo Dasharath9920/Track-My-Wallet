@@ -1,16 +1,20 @@
 import Card from '../Card/Card';
 import { useDispatch, useSelector } from 'react-redux';
-import { StoreActions, type InitialState, type TransactionResponse } from '../../datatypes';
+import { StoreActions, type FilteredTransactions, type InitialState, type TransactionResponse } from '../../datatypes';
 import { useEffect, useState } from 'react';
 import { deleteTransaction, getAllTransactions } from '../../core/transaction-web';
 import { GENERAL_ERROR_MESSAGE, USERID } from '../../constants';
-import { formatINR } from '../../utils';
+import { formatINR, groupTransactionsByDate } from '../../utils';
 import { DELETE_ICON, EIDT_ICON } from '../Dashboard/data';
+import './Transactions.css';
 
 const Transactions = ({ onEdit }: { onEdit: (transaction: TransactionResponse) => void }) => {
   const [loading, setLoading] = useState(true);
+  const [filteredData, setFilteredData] = useState<FilteredTransactions>({});
+
   const hide = useSelector((state: InitialState) => state.hideAmount);
   const transactions = useSelector((state: InitialState) => state.transactions);
+
   const userId = localStorage.getItem(USERID);
   const dispatch = useDispatch();
 
@@ -27,6 +31,7 @@ const Transactions = ({ onEdit }: { onEdit: (transaction: TransactionResponse) =
           type: StoreActions.UPDATE_TRANSACTIONS,
           data: data
         });
+        setFilteredData(groupTransactionsByDate(data));
       } catch (err) {
         alert(err ?? GENERAL_ERROR_MESSAGE);
       }
@@ -43,6 +48,7 @@ const Transactions = ({ onEdit }: { onEdit: (transaction: TransactionResponse) =
             type: StoreActions.UPDATE_TRANSACTIONS,
             data
           });
+          setFilteredData(groupTransactionsByDate(data));
         } catch (err) {
           console.error('failed to fetch transactions: ', err);
         }
@@ -50,28 +56,37 @@ const Transactions = ({ onEdit }: { onEdit: (transaction: TransactionResponse) =
       setLoading(false);
     }
     fetchTransactions();
-  }, []);
+  }, [transactions]);
 
   return (
     <>
       <Card heading="Recent Transactions" loading={loading}>
-        <ul className='content-container payments'>
-          {transactions.map(transaction => {
-            return <li key={transaction.id} className='payment'>
-              <div className='payment-left'>
-                <div className='payment-field'>
-                  <h4 className='payment-name'>{transaction.category}</h4>
-                  <p className='payment-subtext'>{transaction.date_of_transaction.split('T')[0]}</p>
-                </div>
-                <h3 className='payment-pill'>{hide ? '••••••' : formatINR(transaction.amount)}</h3>
+        <ul className='filtered-transactions-container content-container '>
+          {Object.keys(filteredData).map(key => {
+            return <li key={key} className='filtered-transaction'>
+              <div className="filtered-transaction-header">
+                <p>{key}</p>
+                <h3 className='payment-pill'>Total: {hide ? '••••••' : formatINR(filteredData[key].totalAmount)}</h3>
               </div>
-              <div className="action-btn-group">
-                <button className="btn" onClick={() => handleEditClick(transaction)}><img src={EIDT_ICON} alt="" width={16} height={16} /></button>
-                <button className="btn" onClick={() => handleRemoveClick(transaction)}><img src={DELETE_ICON} alt="" width={16} height={16} /></button>
-              </div>
+              <ul className='payments'>
+                {filteredData[key].data.map(transaction => {
+                  return <li key={transaction.id} className='payment'>
+                    <div className='payment-left'>
+                      <div className='payment-field'>
+                        <h4 className='payment-name'>{transaction.custom_category ? transaction.custom_category : transaction.category}</h4>
+                      </div>
+                      <h3 className='payment-pill'>{hide ? '••••••' : formatINR(transaction.amount)}</h3>
+                    </div>
+                    <div className="action-btn-group">
+                      <button className="btn" onClick={() => handleEditClick(transaction)}><img src={EIDT_ICON} alt="" width={16} height={16} /></button>
+                      <button className="btn" onClick={() => handleRemoveClick(transaction)}><img src={DELETE_ICON} alt="" width={16} height={16} /></button>
+                    </div>
+                  </li>
+                })
+                }
+              </ul>
             </li>
-          })
-          }
+          })}
         </ul>
       </Card></>
   )

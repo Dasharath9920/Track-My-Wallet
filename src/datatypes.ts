@@ -110,3 +110,10 @@ export const modalTypes = {
 } as const;
 
 export type modalTypes = typeof modalTypes[keyof typeof modalTypes];
+
+export type FilteredTransaction = {
+  totalAmount: number;
+  data: TransactionResponse[]
+}
+
+export type FilteredTransactions = Record<string, FilteredTransaction>
